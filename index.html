@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background: #fff;
+    }
+</style>
+<body>
+    <debug-show></debug-show>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid, esse.</p>
+    <p>Maiores, soluta sed. Dignissimos ratione necessitatibus iure veniam soluta at.</p>
+    <var-dump file="test" line="15">
+        1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+    </var-dump>
+    <var-dump>
+        2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+    </var-dump>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid, esse.</p>
+    <p>Maiores, soluta sed. Dignissimos ratione necessitatibus iure veniam soluta at.</p>
+    <var-dump>
+        3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!3 Lorem ipsum dolor sit amet consectetur adipisicing elit
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+        3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+        3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+        3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+    </var-dump>
+    <var-dump>
+        4 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+        4 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+        4 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+        4 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+    </var-dump>
+    <var-dump>
+        5 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+        5 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+        5 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+        5 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+    </var-dump>
+    <var-dump>
+        6 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, et!
+        dasdasd
+        dasdsadsadsadsadsadas
+        dasdsadsa
+    </var-dump>
+
+    <script src="debug-show.js"></script>
+    <script src="var-dump.js"></script>
+
+    <script>
+        const el = document.createElement("var-dump");
+        el.innerHTML = "7 dynamiczny";
+        document.body.append(el);
+
+        setTimeout(() => {
+            const el = document.createElement("var-dump");
+            el.innerHTML = "8 dynamiczny XXX";
+            document.body.append(el);
+        }, 3000)
+    </script>
+</body>
+</html>
