@@ -16,7 +16,8 @@ customElements.define(
             const style = document.createElement("style");
             style.textContent = `
                 .my-debug {
-                    --color: #03a6ff;
+                    --color: #f9320c;
+                    --colorDark: color-mix(in srgb, var(--color), black 20%);
                     box-sizing: border-box;
                     position: fixed;
                     top: 20px;
@@ -34,6 +35,7 @@ customElements.define(
                     .my-debug-body {
                         display: block;
                     }
+                    .my-debug-toggle-all,
                     .my-debug-search-input {
                         display: block;
                     }
@@ -48,6 +50,20 @@ customElements.define(
                     gap: 5px;
                     font-size: 13px;
                 }
+                .my-debug-toggle-all {
+                    width: 35px;
+                    height: 35px;
+                    border: 0;
+                    border-radius: 3px;
+                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='currentColor' d='m16 28l-7-7l1.41-1.41L16 25.17l5.59-5.58L23 21zm0-24l7 7l-1.41 1.41L16 6.83l-5.59 5.58L9 11z'/%3E%3C/svg%3E");
+                    background-size: 17px;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    cursor: pointer;
+                    text-indent: -999px;
+                    overflow: hidden;
+                    display: none;
+                }
                 .my-debug-search-input {
                     display: none;
                     height: 35px;
@@ -55,7 +71,7 @@ customElements.define(
                     flex: 1;
                     box-sizing: border-box;
                     border: 1px solid #D4D4D4;
-                    border-radius: 4px;
+                    border-radius: 3px;
                     background: #fff;
                     padding: 0 10px;
                     font-family: sans-serif;
@@ -77,7 +93,7 @@ customElements.define(
                     border: 0;
                     position: relative;
                     border: 0;
-                    background: var(--color);
+                    background: linear-gradient(var(--color), var(--colorDark));
                     border-radius: 3px;
                     box-shadow: 0 2px 3px -2px rgba(0 0 0 / 0.2);
                     cursor: pointer;
@@ -100,7 +116,7 @@ customElements.define(
                     color: #fff;
                     min-height: 15px;
                     min-width: 15px;
-                    box-shadow: 0 2px 3px -2px rgba(0 0 0 / 0.4);
+                    box-shadow: 0 2px 3px rgba(0 0 0 / 0.4);
                 }
                 .my-debug-toggle::before {
                     content: "";
@@ -109,16 +125,15 @@ customElements.define(
                     mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3C!-- Icon from All by undefined - undefined --%3E%3Cpath fill='currentColor' d='M4.47 21h15.06c1.54 0 2.5-1.67 1.73-3L13.73 4.99c-.77-1.33-2.69-1.33-3.46 0L2.74 18c-.77 1.33.19 3 1.73 3M12 14c-.55 0-1-.45-1-1v-2c0-.55.45-1 1-1s1 .45 1 1v2c0 .55-.45 1-1 1m1 4h-2v-2h2z'/%3E%3C/svg%3E");
                     mask-position: center;
                     mask-repeat: no-repeat;
-                    mask-size: 16px;
+                    mask-size: 20px;
                     background-color: #fff;
                 }
                 .my-debug-body {
                     display: none;
                     background: #fff;
                     border-radius: 3px;
-                    padding: 20px;
-                    box-shadow: 0 2px 3px -2px rgba(0 0 0 / 0.4);
-                    border: 1px solid #D4D4D4;
+                    padding: 10px;
+                    box-shadow: 0 2px 7px rgba(0 0 0 / 0.1);
                     max-width: calc(100vw - 90px);
                     max-height: calc(100vh - 130px);
                     overflow: auto;
@@ -134,10 +149,11 @@ customElements.define(
                 }
 
                 .my-debug-el {
+                    overflow: hidden;
                     font-family: sans-serif;
-                    border-left: 5px solid var(--color);
-                    border-radius: 5px;
+                    border-radius: 3px;
                     padding-right: 20px;
+                    background: #f5f5f5;
                 }
                 .my-debug-el + .my-debug-el {
                     margin-top: 10px;
@@ -157,18 +173,20 @@ customElements.define(
                     display: flex;
                     align-items: center;
                     white-space: nowrap;
-                    gap: 10px;
+                    gap: 5px;
                     padding: 5px 10px;
-                    background: #eee;
+                    padding-right: 5px;
                     font-size: 12px;
                     margin-right: -20px;
-                    border-radius: 0 5px 0 0;
+                    border-bottom: 1px solid #eee;
                 }
                 .my-debug-el-toggle {
                     width: 20px;
                     height: 20px;
                     background: none;
                     cursor: pointer;
+                    background-color: #e5e5e5;
+                    border-radius: 3px;
                     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3C!-- Icon from All by undefined - undefined --%3E%3Cpath fill='currentColor' d='m12 10.8l-4.6 4.6L6 14l6-6l6 6l-1.4 1.4z'/%3E%3C/svg%3E");
                     background-position: center;
                     background-repeat: no-repeat;
@@ -182,10 +200,12 @@ customElements.define(
                     margin-left: auto;
                     background: none;
                     cursor: pointer;
+                    background-color: #e5e5e5;
+                    border-radius: 3px;
                     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3C!-- Icon from All by undefined - undefined --%3E%3Cpath fill='currentColor' d='M19 19H8q-.825 0-1.412-.587T6 17V3q0-.825.588-1.412T8 1h7l6 6v10q0 .825-.587 1.413T19 19M14 8V3H8v14h11V8zM4 23q-.825 0-1.412-.587T2 21V7h2v14h11v2zM8 3v5zv14z'/%3E%3C/svg%3E");
                     background-position: center;
                     background-repeat: no-repeat;
-                    background-size: 15px;
+                    background-size: 13px;
                     border: 0;
                     position: relative;
                 }
@@ -230,7 +250,6 @@ customElements.define(
                     padding: 10px;
                     font-size: 12px;
                     display: grid;
-                    background: #fafafa;
                     grid-template-columns: 1fr;
                     border-radius: 0 0 4px 4px;
                     margin-right: -20px;
@@ -273,6 +292,15 @@ customElements.define(
                 input.oninput = this.filterDebug.bind(this);
                 header.append(input);
                 this.DOM.input = input;
+            }
+
+            {
+                const el = document.createElement("button");
+                el.classList.add("my-debug-toggle-all");
+                el.innerText = "Toggle all";
+                el.onclick = this.toggleAll.bind(this);
+                header.append(el);
+                this.DOM.toggleAll = el;
             }
 
             {
@@ -339,6 +367,12 @@ customElements.define(
         showDebugger(visible) {
             localStorage.setItem("my-debuger", visible);
             this.DOM.debug.classList.toggle("is-show", visible);
+        }
+
+        toggleAll() {
+            let toggle = [...this.dataCollapse.values()].some(obj => obj.collapse === false);
+            this.dataCollapse.forEach(el => el.collapse = toggle);
+            this.renderDebug();
         }
 
         renderDebug(target, prop, value) {
